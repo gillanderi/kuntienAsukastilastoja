@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+
+    <style>
+        h1{
+            font-size: 20pt;
+            margin: 0;
+        }
+        h2{
+            font-size: 16pt;
+            margin: 0;
+        }
+        .mdl-layout {
+            margin-top: 15px;
+            margin-left: 30px;
+            margin-right: auto;
+            width: 960px;
+            max-width: 960px;
+        }
+    </style>
+
+    <title>Suomen kuntatiedot</title>
+
+</head>
+
+<div class="mdl-layout">
+<body>
+    <h1>Suomen Kuntatiedot</h1>
+
+    <form action="/" method="GET">
+        <label for="search">Hakusana:</label>
+        <input type="text" id="search" name="search" placeholder="Syötä hakusana">
+        <button type="submit">Hae</button>
+    </form>
+
+    <div class="mdl-data-table">
+    <table>
+        
+        <thead>
+            <tr>
+             
+                <th class="mdl-data-table__header--selectable <%= (jarjesta === 'kunta') ? 'mdl-data-table__header--sorted-' + suunta : '' %>">
+                    <a href="/?sortBy=kunta&sortDir=<%= (jarjesta === 'kunta' && suunta === 'asc') ? 'desc' : 'asc' %>">
+                        Kunnan nimi
+                        <% if (jarjesta === 'kunta') { %>
+                            <span class="material-icons">
+                                <%= (suunta === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down') %>
+                            </span>
+                        <% } %>
+                    </a>
+                </th>
+        
+                <th class="mdl-data-table__header--selectable <%= (jarjesta === 'asukkaatYhteensa') ? 'mdl-data-table__header--sorted-' + suunta : '' %>">
+                    <a href="/?sortBy=asukkaatYhteensa&sortDir=<%= (jarjesta === 'asukkaatYhteensa' && suunta === 'asc') ? 'desc' : 'asc' %>">
+                        Asukasmäärä yhteensä
+                        <% if (jarjesta === 'asukkaatYhteensa') { %>
+                            <span class="material-icons">
+                                <%= (suunta === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down') %>
+                            </span>
+                        <% } %>
+                    </a>
+                </th>
+        
+                <th class="mdl-data-table__header--selectable <%= (jarjesta === 'asukkaatMiehet') ? 'mdl-data-table__header--sorted-' + suunta : '' %>">
+                    <a href="/?sortBy=asukkaatMiehet&sortDir=<%= (jarjesta === 'asukkaatMiehet' && suunta === 'asc') ? 'desc' : 'asc' %>">
+                        Miesten asukasmäärä
+                        <% if (jarjesta === 'asukkaatMiehet') { %>
+                            <span class="material-icons">
+                                <%= (suunta === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down') %>
+                            </span>
+                        <% } %>
+                    </a>
+                </th>
+        
+                <th class="mdl-data-table__header--selectable <%= (jarjesta === 'asukkaatNaiset') ? 'mdl-data-table__header--sorted-' + suunta : '' %>">
+                    <a href="/?sortBy=asukkaatNaiset&sortDir=<%= (jarjesta === 'asukkaatNaiset' && suunta === 'asc') ? 'desc' : 'asc' %>">
+                        Naisten asukasmäärä
+                        <% if (jarjesta === 'asukkaatNaiset') { %>
+                            <span class="material-icons">
+                                <%= (suunta === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down') %>
+                            </span>
+                        <% } %>
+                    </a>
+                </th>
+            
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% for (const tilastot of data.kunnat) { %>
+                <tr>
+                    <td>
+                        <%= tilastot.kunta %>
+                    </td>
+                    <td>
+                        <%= tilastot.asukkaatYhteensa.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ' ) %>
+                    </td>
+                    <td>
+                        <%= tilastot.asukkaatMiehet.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ' ) %>
+                    </td>
+                    <td>
+                        <%= tilastot.asukkaatNaiset.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ' ) %>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+</div>
+
+    <div>
+        <h2>Yhteenveto</h2>
+        <p>Kuntien lukumäärä: <%= data.yhteensaKuntia %>
+        </p>
+        <p>Kuntien asukasluvun keskiarvo: <%= data.keskiarvoAsukkaat.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ' )
+                %>
+        </p>
+        <p>Naisten prosentuaalinen osuus koko väestöstä: <%= data.prosenttiNaiset.toFixed(2) %> %</p>
+
+    </div>
+
+</body>
+</div>
+
+
+</html>

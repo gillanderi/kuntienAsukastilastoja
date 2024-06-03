@@ -1,0 +1,1 @@
+# Node-, Express-, Prisma- ja EJS-tekniikoin sovellus, jolla käyttäjä voi tarkastella Suomen kuntien asukasmäärätietoja. Sovelluksen datana käytetään SQLite-tietokantaa. Tyylimuotoiluun käytetään Material Design Lite -kirjastoa.
